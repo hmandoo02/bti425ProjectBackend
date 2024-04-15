@@ -48,8 +48,6 @@ app.get("/api/user/music", passport.authenticate('jwt', { session: false }), asy
 
 app.get("/api/user/music/:artist/:album", passport.authenticate('jwt', { session: false }), async (req, res) => {
     let { artist, album } = req.params;
-    artist = decodeURIComponent(artist);
-    album = decodeURIComponent(album);
 
     try {
         const albumInfo = await lastfmService.getAlbumInfo(artist, album);
