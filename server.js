@@ -58,6 +58,17 @@ app.get("/api/user/music/:artist/:album", passport.authenticate('jwt', { session
     }
 });
 
+app.get("/api/user/xxxtentacion", passport.authenticate('jwt', { session: false }), async (req, res) => {
+
+    try {
+        const albumInfo = await lastfmService.getAlbumInfo("xxxtentacion", "?");
+        res.json(albumInfo);
+    } catch (error) {
+        console.error('Error fetching album info from Last.fm:', error);
+        res.status(500).send('Error fetching album info from Last.fm');
+    }
+});
+
 app.post("/api/user/getfavs", passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         const favorites = await userService.findFavourites(req.body);
